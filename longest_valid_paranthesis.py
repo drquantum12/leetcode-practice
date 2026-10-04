@@ -29,3 +29,36 @@ class Solution:
                     if diff>max_cnt:
                         max_cnt=diff
         return max_cnt
+
+
+
+
+# class Solution:
+#     def longestValidParentheses(self, s: str) -> int:
+#         max_cnt=0
+#         left=0
+#         right=0
+#         for i in range(0,len(s)):
+#             if s[i]=="(":
+#                 left+=1
+#             else:
+#                 right+=1
+#             if left==right:
+#                 max_cnt=max(max_cnt, 2*right)
+#             elif right>left:
+#                 right=0
+#                 left=0
+#         left=0
+#         right=0
+#         for i in range(len(s)-1,-1,-1):
+#             if s[i]=="(":
+#                 left+=1
+#             else:
+#                 right+=1
+#             if left==right:
+#                 max_cnt=max(max_cnt, 2*left)
+#             elif left>right:
+#                 right=0
+#                 left=0
+            
+#         return max_cnt
