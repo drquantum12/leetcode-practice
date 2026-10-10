@@ -22,18 +22,54 @@ class Solution:
     def minSumSquareDiff(self, nums1: list[int], nums2: list[int], k1: int, k2: int) -> int:
         k=k1+k2
         diffs=[abs(i-j) for i,j in zip(nums1, nums2)]
+        if sum(diffs) <=k:
+            return 0
+
         m=(max(diffs)+1)
         res=[0]*m
         for i in diffs:
+
             res[i]+=1
         for i in range(m-1,0,-1):
-            if k>res[i]:
-                k-=res[i]
-                res[i-1]+=res[i]
+            c=res[i]
+            if c==0:
+                continue
+            if k>c:
+                k-=c
+                res[i-1]+=c
                 res[i]=0
             else:
                 res[i]-=k
                 res[i-1]+=k
                 k=0
                 break
-        return sum([(i*i*res[i]) for i in range(1,m)])
+        return sum([(i*i*res[i]) for i in range(1,m) if res[i]])
+
+# binary search based solution : 
+# class Solution:
+#     def minSumSquareDiff(self, nums1: list[int], nums2: list[int], k1: int, k2: int) -> int:
+#         k=k1+k2
+#         diffs=[abs(i-j) for i,j in zip(nums1, nums2)]
+#         target_cap=0
+#         ans=0
+#         if sum(diffs) <=k:
+#             return 0
+#         low,high=0,max(diffs)
+#         while low<=high:
+#             mid=(low+high)//2
+#             needed=sum([max(i-mid,0) for i in diffs])
+#             if k>=needed:
+#                 high=mid-1
+#                 target_cap=mid
+#             else:
+#                 low=mid+1
+#         k_rem=k-sum([max(i-target_cap,0) for i in diffs])
+#         new_diffs=[min(target_cap, i) for i in diffs]
+#         for i in new_diffs:
+#             if i==target_cap and k_rem>0:
+#                 val=i-1
+#                 k_rem-=1
+#             else:
+#                 val=i
+#             ans+=(val*val)
+#         return ans
