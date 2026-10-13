@@ -39,5 +39,3 @@ class Solution:
             for j in range(limit):
                 top_k[j] |= val
         return sum(i*i for i in top_k) % MOD
-
-        
